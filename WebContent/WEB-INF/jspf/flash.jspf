@@ -1,0 +1,22 @@
+<%@ page pageEncoding="UTF-8"%>
+<%-- Messages de session (succès / erreur) posés par les servlets, affichés une seule fois.
+     Clés historiques conservées : succMsg, sucMsg, succMsgd (succès) ; errorMsg, errorMsgd (erreur). --%>
+<%
+	String[][] flashKeys = { { "succMsg", "success" }, { "sucMsg", "success" }, { "succMsgd", "success" },
+			{ "errorMsg", "danger" }, { "errorMsgd", "danger" } };
+	for (String[] flash : flashKeys) {
+		Object flashText = session.getAttribute(flash[0]);
+		if (flashText == null || flashText.toString().isEmpty()) {
+			continue;
+		}
+		session.removeAttribute(flash[0]);
+		boolean flashOk = "success".equals(flash[1]);
+%>
+<div class="alert alert-<%=flash[1]%> alert-dismissible fade show" role="<%=flashOk ? "status" : "alert"%>">
+	<i class="fas <%=flashOk ? "fa-check-circle" : "fa-exclamation-circle"%> mt-1"></i>
+	<div><%=com.util.Html.esc(flashText)%></div>
+	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+</div>
+<%
+	}
+%>

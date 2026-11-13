@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Expose le BeanManager CDI (Weld) dans l'annuaire JNDI de Tomcat, comme le
+     recommande la documentation Weld pour Tomcat (utilisé par Jersey-CDI). -->
+<Context>
+	<Resource name="BeanManager" auth="Container"
+		type="javax.enterprise.inject.spi.BeanManager"
+		factory="org.jboss.weld.resources.ManagerObjectFactory" />
+</Context>

@@ -1,0 +1,39 @@
+<%@ page pageEncoding="UTF-8"%>
+<%-- Navigation de l'administration. Lien actif : <c:set var="nav" value="..."/> avant l'inclusion. --%>
+<nav class="navbar navbar-expand-lg app-navbar">
+	<div class="container">
+		<a class="navbar-brand" href="${ctx}/admin/index.jsp">
+			<span class="brand-mark"><i class="fas fa-heartbeat"></i></span> Medi Home
+			<span class="brand-space">Administration</span>
+		</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+			aria-controls="mainNav" aria-expanded="false" aria-label="Ouvrir le menu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="mainNav">
+			<ul class="navbar-nav me-auto ms-lg-4 gap-lg-1">
+				<li class="nav-item"><a class="nav-link ${nav == 'dashboard' ? 'active' : ''}" href="${ctx}/admin/index.jsp">
+					<i class="fas fa-chart-pie"></i> Tableau de bord</a></li>
+				<li class="nav-item"><a class="nav-link ${nav == 'doctors' ? 'active' : ''}" href="${ctx}/admin/view_doctor.jsp">
+					<i class="fas fa-user-md"></i> Médecins</a></li>
+				<li class="nav-item"><a class="nav-link ${nav == 'appointments' ? 'active' : ''}" href="${ctx}/admin/patient.jsp">
+					<i class="far fa-calendar-alt"></i> Rendez-vous</a></li>
+			</ul>
+			<div class="dropdown user-menu">
+				<button class="user-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<span class="avatar-sm"><i class="fas fa-user-shield"></i></span>
+					<span>${fn:escapeXml(adminObj.email)}</span>
+				</button>
+				<ul class="dropdown-menu dropdown-menu-end">
+					<li><h6 class="dropdown-header">Administrateur</h6></li>
+					<li>
+						<form class="logout-form" action="${ctx}/adminLogout" method="post">
+							<input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+							<button type="submit" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i> Se déconnecter</button>
+						</form>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>

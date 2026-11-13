@@ -1,0 +1,15 @@
+<%@ page pageEncoding="UTF-8"%>
+<footer class="app-footer">
+	<div class="container d-flex flex-wrap align-items-center justify-content-between gap-3">
+		<div class="d-flex align-items-center gap-2">
+			<span class="brand-mark"><i class="fas fa-heartbeat"></i></span>
+			<span><strong class="text-white">Medi Home</strong> &middot; Gestion hospitalière et téléconsultation</span>
+		</div>
+		<div class="d-flex gap-3">
+			<a href="${ctx}/index.jsp">Accueil</a>
+			<a href="${ctx}/doctor_login.jsp">Espace médecin</a>
+			<a href="${ctx}/admin_login.jsp">Administration</a>
+		</div>
+	</div>
+</footer>
+<script src="${ctx}/js/forms.js"></script>

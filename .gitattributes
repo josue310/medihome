@@ -1,0 +1,3 @@
+# Le script de démarrage du conteneur doit garder des fins de ligne Unix
+*.sh text eol=lf
+Dockerfile text eol=lf

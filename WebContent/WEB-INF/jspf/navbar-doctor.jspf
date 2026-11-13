@@ -1,0 +1,41 @@
+<%@ page pageEncoding="UTF-8"%>
+<%-- Navigation de l'espace médecin. Lien actif : <c:set var="nav" value="..."/> avant l'inclusion. --%>
+<nav class="navbar navbar-expand-lg app-navbar">
+	<div class="container">
+		<a class="navbar-brand" href="${ctx}/doctor/index.jsp">
+			<span class="brand-mark"><i class="fas fa-heartbeat"></i></span> Medi Home
+			<span class="brand-space">Espace médecin</span>
+		</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+			aria-controls="mainNav" aria-expanded="false" aria-label="Ouvrir le menu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="mainNav">
+			<ul class="navbar-nav me-auto ms-lg-4 gap-lg-1">
+				<li class="nav-item"><a class="nav-link ${nav == 'dashboard' ? 'active' : ''}" href="${ctx}/doctor/index.jsp">
+					<i class="fas fa-chart-pie"></i> Tableau de bord</a></li>
+				<li class="nav-item"><a class="nav-link ${nav == 'patients' ? 'active' : ''}" href="${ctx}/doctor/patient.jsp">
+					<i class="fas fa-user-injured"></i> Mes patients</a></li>
+				<li class="nav-item"><a class="nav-link ${nav == 'profile' ? 'active' : ''}" href="${ctx}/doctor/edit_profile.jsp">
+					<i class="fas fa-id-badge"></i> Mon profil</a></li>
+			</ul>
+			<div class="dropdown user-menu">
+				<button class="user-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<span class="avatar-sm">${fn:toUpperCase(fn:substring(doctObj.fullName, 0, 1))}</span>
+					<span>Dr ${fn:escapeXml(doctObj.fullName)}</span>
+				</button>
+				<ul class="dropdown-menu dropdown-menu-end">
+					<li><h6 class="dropdown-header">${fn:escapeXml(doctObj.specialist)}</h6></li>
+					<li><a class="dropdown-item" href="${ctx}/doctor/edit_profile.jsp"><i class="fas fa-id-badge"></i> Mon profil</a></li>
+					<li><hr class="dropdown-divider"></li>
+					<li>
+						<form class="logout-form" action="${ctx}/doctorLogout" method="post">
+							<input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+							<button type="submit" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i> Se déconnecter</button>
+						</form>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</nav>

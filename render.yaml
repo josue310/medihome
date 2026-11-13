@@ -1,0 +1,26 @@
+# Déploiement Render (Blueprint) : New + > Blueprint > choisir ce dépôt.
+# Les valeurs « sync: false » sont demandées par Render à la création.
+services:
+  - type: web
+    name: medihome
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /index.jsp
+    envVars:
+      - key: HOSPITAL_DB_URL        # jdbc:mysql://HOTE:PORT/BASE?useSSL=true&requireSSL=true&verifyServerCertificate=false
+        sync: false
+      - key: HOSPITAL_DB_USER
+        sync: false
+      - key: HOSPITAL_DB_PASSWORD
+        sync: false
+      - key: ADMIN_EMAIL            # compte administrateur créé au premier démarrage
+        sync: false
+      - key: ADMIN_PASSWORD         # 8 caractères minimum
+        sync: false
+      - key: TURN_URLS              # facultatif : relais TURN (ex. Open Relay / Metered)
+        sync: false
+      - key: TURN_USERNAME
+        sync: false
+      - key: TURN_CREDENTIAL
+        sync: false

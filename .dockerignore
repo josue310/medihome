@@ -1,0 +1,8 @@
+build/
+.settings/
+.classpath
+.project
+*.bak
+database/
+setup_securite.bat
+WebContent/WEB-INF/classes/

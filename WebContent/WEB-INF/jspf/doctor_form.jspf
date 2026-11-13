@@ -1,0 +1,47 @@
+<%@ page pageEncoding="UTF-8"%>
+<%-- Champs du formulaire médecin, partagés par doctor.jsp (création) et edit_doctor.jsp (modification).
+     Variables attendues dans la page : Doctor editDoctor (null en création). --%>
+<div class="row g-3">
+	<div class="col-md-7">
+		<label class="form-label" for="fullname">Nom complet</label>
+		<input id="fullname" name="fullname" type="text" class="form-control" maxlength="100" required
+			value="<%=editDoctor == null ? "" : Html.esc(editDoctor.getFullName())%>">
+	</div>
+	<div class="col-md-5">
+		<label class="form-label" for="dob">Date de naissance</label>
+		<input id="dob" name="dob" type="date" class="form-control" required
+			value="<%=editDoctor == null ? "" : Html.esc(editDoctor.getDob())%>">
+	</div>
+	<div class="col-md-6">
+		<label class="form-label" for="qualification">Diplôme / qualification</label>
+		<input id="qualification" name="qualification" type="text" class="form-control" maxlength="100" required
+			placeholder="Ex. : Doctorat en médecine" value="<%=editDoctor == null ? "" : Html.esc(editDoctor.getQualification())%>">
+	</div>
+	<div class="col-md-6">
+		<label class="form-label" for="spec">Spécialité</label>
+		<select id="spec" name="spec" class="form-select" required>
+			<option value="">Choisir…</option>
+			<% for (Specalist s : new SpecialistDAO(DBConnect.getConn()).getAllSpecialist()) {
+				boolean sel = editDoctor != null && s.getSpecialistName().equals(editDoctor.getSpecialist()); %>
+			<option <%=sel ? "selected" : ""%>><%=Html.esc(s.getSpecialistName())%></option>
+			<% } %>
+		</select>
+		<div class="form-hint">Une spécialité manque ? Ajoutez-la depuis le <a href="${ctx}/admin/index.jsp">tableau de bord</a>.</div>
+	</div>
+	<div class="col-md-6">
+		<label class="form-label" for="email">E-mail (identifiant de connexion)</label>
+		<input id="email" name="email" type="email" class="form-control" maxlength="100" required
+			value="<%=editDoctor == null ? "" : Html.esc(editDoctor.getEmail())%>">
+	</div>
+	<div class="col-md-6">
+		<label class="form-label" for="mobno">Téléphone</label>
+		<input id="mobno" name="mobno" type="tel" class="form-control" maxlength="20" required
+			value="<%=editDoctor == null ? "" : Html.esc(editDoctor.getMobNo())%>">
+	</div>
+	<div class="col-md-6">
+		<label class="form-label" for="password"><%=editDoctor == null ? "Mot de passe initial" : "Nouveau mot de passe"%></label>
+		<input id="password" name="password" type="password" class="form-control" autocomplete="new-password"
+			minlength="8" maxlength="128" <%=editDoctor == null ? "required" : ""%>>
+		<div class="form-hint"><%=editDoctor == null ? "8 caractères minimum. À communiquer au médecin." : "Laisser vide pour conserver le mot de passe actuel."%></div>
+	</div>
+</div>

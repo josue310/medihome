@@ -1,0 +1,63 @@
+<%@ page pageEncoding="UTF-8"%>
+<%-- Navigation publique et espace patient. Lien actif : <c:set var="nav" value="..."/> avant l'inclusion. --%>
+<nav class="navbar navbar-expand-lg app-navbar">
+	<div class="container">
+		<a class="navbar-brand" href="${ctx}/index.jsp">
+			<span class="brand-mark"><i class="fas fa-heartbeat"></i></span> Medi Home
+			<c:if test="${not empty userObj}"><span class="brand-space">Espace patient</span></c:if>
+		</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+			aria-controls="mainNav" aria-expanded="false" aria-label="Ouvrir le menu">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="mainNav">
+			<ul class="navbar-nav me-auto ms-lg-4 gap-lg-1">
+				<li class="nav-item"><a class="nav-link ${nav == 'home' ? 'active' : ''}" href="${ctx}/index.jsp">
+					<i class="fas fa-home"></i> ${empty userObj ? 'Accueil' : 'Mon espace'}</a></li>
+				<li class="nav-item"><a class="nav-link ${nav == 'book' ? 'active' : ''}" href="${ctx}/user_appointment.jsp">
+					<i class="far fa-calendar-plus"></i> Prendre rendez-vous</a></li>
+				<c:if test="${not empty userObj}">
+					<li class="nav-item"><a class="nav-link ${nav == 'appointments' ? 'active' : ''}" href="${ctx}/view_appointment.jsp">
+						<i class="far fa-calendar-check"></i> Mes rendez-vous</a></li>
+				</c:if>
+			</ul>
+
+			<c:choose>
+				<c:when test="${empty userObj}">
+					<div class="d-flex flex-wrap align-items-center gap-2 user-menu">
+						<div class="dropdown">
+							<button class="btn btn-light-border dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<i class="fas fa-briefcase-medical"></i> Espaces pro
+							</button>
+							<ul class="dropdown-menu dropdown-menu-end">
+								<li><a class="dropdown-item" href="${ctx}/doctor_login.jsp"><i class="fas fa-user-md"></i> Espace médecin</a></li>
+								<li><a class="dropdown-item" href="${ctx}/admin_login.jsp"><i class="fas fa-user-shield"></i> Administration</a></li>
+							</ul>
+						</div>
+						<a class="btn btn-light-border" href="${ctx}/user_login.jsp">Se connecter</a>
+						<a class="btn btn-primary" href="${ctx}/signup.jsp">Créer un compte</a>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="dropdown user-menu">
+						<button class="user-btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<span class="avatar-sm">${fn:toUpperCase(fn:substring(userObj.fullName, 0, 1))}</span>
+							<span>${fn:escapeXml(userObj.fullName)}</span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-end">
+							<li><h6 class="dropdown-header">Connecté(e) en tant que patient</h6></li>
+							<li><a class="dropdown-item" href="${ctx}/change_password.jsp"><i class="fas fa-key"></i> Changer le mot de passe</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<form class="logout-form" action="${ctx}/userLogout" method="post">
+									<input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+									<button type="submit" class="dropdown-item text-danger"><i class="fas fa-sign-out-alt"></i> Se déconnecter</button>
+								</form>
+							</li>
+						</ul>
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</div>
+</nav>

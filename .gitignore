@@ -1,0 +1,7 @@
+build/
+bin/
+WebContent/WEB-INF/classes/
+*.class
+*.bak
+.DS_Store
+._*
